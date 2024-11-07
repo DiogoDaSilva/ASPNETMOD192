@@ -1,0 +1,60 @@
+﻿@model ASPNETMOD192.Models.Client
+
+<h1 class="text-danger">Deleting Client: @Model.ID</h1>
+
+<a asp-action="Index" class="btn btn-secondary">Go Back</a>
+
+<div class="row">
+    <div class="col-4">
+        <form asp-action="Delete">
+            <div class="form-group">
+                <label asp-for="Name" class="form-label"></label>
+                <div class="form-control">@Html.DisplayFor(model => model.Name) </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Birthday" class="form-label"></label>
+                <div class="form-control">@Html.DisplayFor(model => model.Birthday) </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Address" class="form-label"></label>
+                <div class="form-control">@Html.DisplayFor(model => model.Address) </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="VATNumber" class="form-label"></label>
+                <div class="form-control">@Html.DisplayFor(model => model.VATNumber) </div>
+
+            </div>
+
+            <div class="form-group">
+                <label asp-for="AdmissionDate" class="form-label"></label>
+                <div class="form-control">@Html.DisplayFor(model => model.AdmissionDate) </div>
+            </div>
+
+            <input type="hidden" asp-for="DeactivationDate" />
+
+            @* <div class="form-group">
+            <label asp-for="DeactivationDate" class="form-label"></label>
+            <input asp-for="DeactivationDate" class="form-control" />
+            </div> *@
+
+            <div class="form-group">
+                <label asp-for="CellPhoneNumber" class="form-label"></label>
+                <div class="form-control">@Html.DisplayFor(model => model.CellPhoneNumber) </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Email" class="form-label"></label>
+                <div class="form-control">@Html.DisplayFor(model => model.Email) </div>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Delete" class="btn btn-danger" />
+            </div>
+        </form>
+    </div>
+</div>
+
+

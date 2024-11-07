@@ -1,0 +1,93 @@
+﻿@model IEnumerable<ASPNETMOD192.Models.Client>
+
+@{
+
+}
+
+<h1>Clients Index</h1>
+
+
+<a asp-controller="Client" asp-action="Create">Create New</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Birthday)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.CellPhoneNumber)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.VATNumber)
+            </th>
+
+            <th>
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(Client client in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => client.Name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => client.Birthday)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => client.CellPhoneNumber)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => client.VATNumber)
+                </td>
+
+                <td>
+                    <a asp-action="Details" asp-route-id="@client.ID" class="btn btn-primary">Details</a>
+                    <a asp-action="Edit"    asp-route-id="@client.ID" class="btn btn-primary">Edit</a>
+                    <a asp-action="Delete"  asp-route-id="@client.ID" class="btn btn-primary">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@(
+Html.Grid(Model)
+            .Build(columns =>
+            {
+                columns.Add(cli => cli.Name);
+                columns.Add(cli => cli.Birthday).Formatted("{0:dd-MM-yyyy}");
+                columns.Add(cli => cli.Birthday).Formatted("{0:d}").Filterable(GridFilterType.Double);
+                columns.Add(cli => cli.CellPhoneNumber);
+                columns.Add(cli => cli.VATNumber);
+
+                columns.Add(cli => Html.ActionLink("Edit", "Edit", new { id = cli.ID }, new { @class = "btn btn-primary" }));
+                columns.Add(cli => Html.ActionLink("Details", "Details", new { id = cli.ID }, new { @class = "btn btn-primary" }));
+                columns.Add(cli => Html.ActionLink("Delete", "Delete", new { id = cli.ID }, new { @class = "btn btn-primary" }));
+
+                columns.Add(cli => cli)
+                    .Titled("Actions")
+                    .Encoded(false)
+                    .RenderedAs(cli =>
+                        string.Format("{0} {1}",
+                            $"<a class=\"btn btn-primary\" href=\"/Client/Edit/{cli.ID}\">Edit</a>",
+                            $"<a class=\"btn btn-primary\" href=\"/Client/Delete/{cli.ID}\">Delete</a>"
+                        )
+                    );
+            })
+            .Filterable()
+            .Sortable()
+)

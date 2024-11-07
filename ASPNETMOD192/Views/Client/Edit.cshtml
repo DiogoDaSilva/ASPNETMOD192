@@ -1,0 +1,60 @@
+﻿@model ASPNETMOD192.Models.Client
+
+<h1>Editing Client: @Model.ID</h1>
+
+<a asp-action="Index" class="btn btn-secondary">Go Back</a>
+
+<div class="row">
+    <div class="col-4">
+        <form asp-action="Edit">
+            <div class="form-group">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Birthday" class="form-label"></label>
+                <input asp-for="Birthday" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Address" class="form-label"></label>
+                <input asp-for="Address" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="VATNumber" class="form-label"></label>
+                <input asp-for="VATNumber" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="AdmissionDate" class="form-label"></label>
+                <input asp-for="AdmissionDate" class="form-control" />
+            </div>
+
+            <input type="hidden" asp-for="DeactivationDate" />
+
+            @* <div class="form-group">
+                <label asp-for="DeactivationDate" class="form-label"></label>
+                <input asp-for="DeactivationDate" class="form-control" />
+            </div> *@
+
+            <div class="form-group">
+                <label asp-for="CellPhoneNumber" class="form-label"></label>
+                <input asp-for="CellPhoneNumber" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control" />
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+

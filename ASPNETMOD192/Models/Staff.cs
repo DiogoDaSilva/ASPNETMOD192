@@ -10,6 +10,7 @@ namespace ASPNETMOD192.Models
         public string Name { get; set; }
 
         [Required]
+        [DataType(DataType.Date)]
         public DateOnly Birthday { get; set; }
 
         [StringLength(100)]
