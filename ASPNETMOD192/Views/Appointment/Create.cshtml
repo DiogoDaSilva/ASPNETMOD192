@@ -1,0 +1,69 @@
+﻿@model Appointment
+
+<h1>Create Appointment</h1>
+
+<hr />
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<div class="row">
+    <div class="col-4">
+        <form asp-action="Create">
+
+            <div class="form-group">
+                <label asp-for="AppointmentNumber" class="form-label"></label>
+                <input asp-for="AppointmentNumber" class="form-control" />
+                <span asp-validation-for="AppointmentNumber" class="text-danger"></span>
+                @if(ViewBag.ErrorMessage != null)
+                {
+                    <span class="text-danger">
+                        @ViewBag.ErrorMessage
+                    </span>
+                }
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Date" class="form-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Time" class="form-label"></label>
+                <input asp-for="Time" class="form-control" />
+                <span asp-validation-for="Time" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StaffID" class="form-label"></label>
+                <select asp-for="StaffID" class="form-control" asp-items="ViewBag.StaffList">
+                    <option value="" selected>Please Select a Staff Member</option>
+                </select>
+                <span asp-validation-for="StaffID" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ClientID" class="form-label"></label>
+                <select asp-for="ClientID" class="form-control" asp-items="ViewBag.ClientList"></select>
+                <span asp-validation-for="ClientID" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Informations" class="form-label"></label>
+                <textarea asp-for="Informations" rows="5"  class="form-control"></textarea>
+                <span asp-validation-for="Informations" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="IsDone" class="form-check-label"></label>
+                <input asp-for="IsDone" class="form-check-input" />
+                <span asp-validation-for="IsDone" class="text-danger"></span>
+
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

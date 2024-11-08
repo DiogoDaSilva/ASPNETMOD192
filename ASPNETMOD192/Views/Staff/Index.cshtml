@@ -1,0 +1,86 @@
+﻿@model IEnumerable<Staff>
+
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+
+<table class="table">
+    <thead>
+        <tr>
+@*             <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StaffRoleID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Birthday)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NIF)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Salary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmployeeNumber) *@
+            @* </th> *@
+            <th>
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr>No Data</tr>
+        }
+
+        
+        
+        @foreach(var staff in Model)
+        {
+            <tr>
+                @* <td>
+                    @Html.DisplayFor(modelItem => staff.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => staff.StaffRole.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => staff.Birthday)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => staff.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => staff.PhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => staff.NIF)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => staff.Salary)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => staff.EmployeeNumber)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@staff.ID">Details</a>
+                    <a asp-action="Edit" asp-route-id="@staff.ID">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@staff.ID">Delete</a>
+                </td> *@
+            </tr>
+        }
+    </tbody>
+</table>

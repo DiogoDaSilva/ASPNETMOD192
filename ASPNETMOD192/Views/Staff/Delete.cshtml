@@ -1,0 +1,71 @@
+﻿@* @model Staff
+
+<h1>Delete</h1>
+
+<h3 class="text-danger">Are you sure you want to delete this Staff?</h3>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+
+        <form asp-action="Delete">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+            <div class="form-group">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control" disabled />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EmployeeNumber" class="form-label"></label>
+                <input asp-for="EmployeeNumber" class="form-control" disabled />
+                <span asp-validation-for="EmployeeNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Address" class="form-label"></label>
+                <input asp-for="Address" class="form-control" disabled />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Birthday" class="form-label"></label>
+                <input asp-for="Birthday" class="form-control" disabled />
+                <span asp-validation-for="Birthday" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="form-label"></label>
+                <input asp-for="PhoneNumber" class="form-control" disabled />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control" disabled />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Salary" class="form-label"></label>
+                <input asp-for="Salary" class="form-control" disabled />
+                <span asp-validation-for="Salary" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="NIF" class="form-label"></label>
+                <input asp-for="NIF" class="form-control" disabled/>
+                <span asp-validation-for="NIF" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+
+                <input type="submit" value="Delete" class="btn btn-danger" />
+                <a asp-action="Index">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div> *@

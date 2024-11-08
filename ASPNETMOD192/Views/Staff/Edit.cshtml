@@ -1,0 +1,118 @@
+﻿@* @model Staff
+
+<h1>Edit</h1>
+
+<h4>Staff</h4>
+
+<hr />
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+            <div class="form-group">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EmployeeNumber" class="form-label"></label>
+                <input asp-for="EmployeeNumber" class="form-control" />
+                <span asp-validation-for="EmployeeNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Address" class="form-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Birthday" class="form-label"></label>
+                <input asp-for="Birthday" class="form-control" />
+                <span asp-validation-for="Birthday" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="form-label"></label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Salary" class="form-label"></label>
+                <input asp-for="Salary" class="form-control" />
+                <span asp-validation-for="Salary" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="NIF" class="form-label"></label>
+                <input asp-for="NIF" class="form-control" />
+                <span asp-validation-for="NIF" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StaffRoleID" class="form-label"></label>
+                <select asp-for="StaffRoleID" class="form-control" asp-items="ViewBag.StaffRoles"></select>
+
+                <span asp-validation-for="StaffRoleID" class="text-danger"></span>
+            </div>
+
+            <div id="form-group-specialty" class="form-group">
+                <label asp-for="Specialty" class="form-label"></label>
+                <select asp-for="Specialty" class="form-control" asp-items="Html.GetEnumSelectList<Specialty>()"></select>
+
+                <span asp-validation-for="Specialty" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" on-content-loaded="true">
+
+        const medicStaffRoleID = @(ViewBag.MedicStaffRoleID);
+
+        function visibleFormGroupSpecialty() {
+            let selectedStaffRoleID = $("select#StaffRoleID").val();
+
+            let formGroupSpecialty = $("div#form-group-specialty");
+
+            console.log(selectedStaffRoleID);
+
+            if (selectedStaffRoleID == medicStaffRoleID) {
+                formGroupSpecialty.css('visibility', 'visible');
+                $("select#Specialty").val('@((int)Specialty.Generalist)');
+            }
+            else {
+                formGroupSpecialty.css('visibility', 'hidden');
+                $("select#Specialty").val(null);
+            }
+        }
+
+
+        $("select#StaffRoleID").change(visibleFormGroupSpecialty);
+
+        // Inicializar o form-group-specialty
+        visibleFormGroupSpecialty();
+
+    </script>
+} *@

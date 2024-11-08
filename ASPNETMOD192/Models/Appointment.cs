@@ -1,13 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace ASPNETMOD192.Models
 {
+    [Index(nameof(AppointmentNumber), IsUnique = true)]
     public class Appointment
     {
         public int ID { get; set; }
 
         [Required]
+        [StringLength(10)]
         [Display(Name = "Appointment #")]
         public string AppointmentNumber { get; set; }
 
@@ -31,7 +34,7 @@ namespace ASPNETMOD192.Models
         public bool IsDone { get; set; }
 
 
-        // Propriedade de Navegação
+        // Propriedade de Navegação Lazy Loading
         [ValidateNever]
         public Staff Staff { get; set; }
 
