@@ -66,6 +66,9 @@
     <script>
         document.querySelectorAll('.mvc-grid').forEach(element => new MvcGrid(element));
     </script>
+
+
+    @await Component.InvokeAsync("NToastNotify")
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

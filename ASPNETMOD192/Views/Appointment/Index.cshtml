@@ -3,7 +3,7 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Schedule new Appointment</a>
+    <a asp-action="Create">Schedule new @sharedLocalizer["Appointment"]</a>
 </p>
 
 @(
@@ -15,8 +15,15 @@ Html.Grid(Model)
             columns.Add(ap => ap.Time);
             columns.Add(ap => ap.Client.Name).Titled("Client");
             columns.Add(ap => ap.Staff.Name).Titled("Staff");
-            columns.Add(ap => ap.IsDone);
+            columns.Add(ap => ap.IsDone)
+                .RenderedAs(ap => (ap.IsDone ? "Yes" : "No"))
+                .UsingFilterOptions(new[]
+                {
+                    new SelectListItem { Value = "true", Text = "Yes" },
+                    new SelectListItem { Value = "false", Text = "No" },
+                });
 
+            columns.Add(ap => Html.ActionLink("Details", "Details", new { id = ap.ID }, new { @class = "btn btn-primary" }));
             columns.Add(ap => Html.ActionLink("Edit", "Edit", new { id = ap.ID }, new { @class = "btn btn-primary" }));
             columns.Add(ap => Html.ActionLink("Delete", "Delete", new { id = ap.ID }, new { @class = "btn btn-primary" }));
         })
