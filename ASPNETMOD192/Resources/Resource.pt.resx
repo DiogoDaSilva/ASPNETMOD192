@@ -120,8 +120,7 @@
   <data name="Create New" xml:space="preserve">
     <value>Criar Novo</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Edit" type="System.Resources.ResXNullRef, System.Windows.Forms">
+  <data name="Edit" xml:space="preserve">
     <value>Editar</value>
   </data>
   <data name="Delete" xml:space="preserve">
@@ -129,5 +128,104 @@
   </data>
   <data name="Appointment" xml:space="preserve">
     <value>Consulta</value>
+  </data>
+  <data name="Client" xml:space="preserve">
+    <value>Cliente</value>
+  </data>
+  <data name="Schedule New Appointment" xml:space="preserve">
+    <value>Agendar uma consulta</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="Birthday" xml:space="preserve">
+    <value>Data de Nascimento</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Morada</value>
+  </data>
+  <data name="VAT #" xml:space="preserve">
+    <value>NIF</value>
+  </data>
+  <data name="Admission Date" xml:space="preserve">
+    <value>Data de admissão</value>
+  </data>
+  <data name="Deactivation" xml:space="preserve">
+    <value>Desactivação</value>
+  </data>
+  <data name="Cellphone" xml:space="preserve">
+    <value>Telemóvel</value>
+  </data>
+  <data name="E-mail" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="Appointment #" xml:space="preserve">
+    <value>Consulta #</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Hora</value>
+  </data>
+  <data name="Informations" xml:space="preserve">
+    <value>Informações</value>
+  </data>
+  <data name="Is Done?" xml:space="preserve">
+    <value>Finalizada?</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Criar</value>
+  </data>
+  <data name="Please Select a Staff Member" xml:space="preserve">
+    <value>Por favor, selecciona um membro do Staff</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Detalhes</value>
+  </data>
+  <data name="RequiredErrorMessage" xml:space="preserve">
+    <value>O Campo {0} é obrigatório.</value>
+  </data>
+  <data name="ErrorRepeatedAppointmentNumber" xml:space="preserve">
+    <value>Este # Consulta já existe. Insira um novo sff.</value>
+  </data>
+  <data name="Error while schedulling Appointment #{0}." xml:space="preserve">
+    <value>Erro a agendar a consulta nº {0}.</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Sim</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Não</value>
+  </data>
+  <data name="No Data" xml:space="preserve">
+    <value>Sem dados</value>
+  </data>
+  <data name="Index" xml:space="preserve">
+    <value>Lista</value>
+  </data>
+  <data name="Successfully scheduled &lt;br/&gt; &lt;b&gt;Appointment # {0}&lt;/b&gt;" xml:space="preserve">
+    <value>&lt;b&gt;Consulta #{0}&lt;/b&gt; &lt;br/&gt;agendada com sucesso.</value>
+  </data>
+  <data name="ValidationRequired" xml:space="preserve">
+    <value>O Campo 2 {0} é obrigatório.</value>
+  </data>
+  <data name="A value for the '{0}' property was not provided." xml:space="preserve">
+    <value>Valor {0} não é válido.</value>
+  </data>
+  <data name="The {0} field is required." xml:space="preserve">
+    <value>The 5 {0} field is required.</value>
+  </data>
+  <data name="Validation.Required" xml:space="preserve">
+    <value>O Campo 2 {0} é obrigatório.</value>
+  </data>
+  <data name="StringLenghtErrorMessage" xml:space="preserve">
+    <value>O Campo {0} tem de ter no máximo {1} caracteres.</value>
+  </data>
+  <data name="A value is required" xml:space="preserve">
+    <value>É obrigatório um valor.</value>
+  </data>
+  <data name="This Appointment Number is already used! Please insert a new one." xml:space="preserve">
+    <value>Já existe uma Consulta com este número.</value>
   </data>
 </root>

@@ -1,11 +1,13 @@
 ﻿using ASPNETMOD192.Data;
 using ASPNETMOD192.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Data.Common;
 
 namespace ASPNETMOD192.Controllers
 {
+    [Authorize]
     public class ClientController : Controller
     {
         private readonly ILogger<ClientController> _logger;

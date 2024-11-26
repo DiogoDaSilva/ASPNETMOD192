@@ -1,32 +1,48 @@
 ﻿using ASPNETMOD192.Data;
 using ASPNETMOD192.Models;
+using ASPNETMOD192.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
+using Microsoft.IdentityModel.Tokens;
 using NToastNotify;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Text;
+using static ASPNETMOD192.ASPNETMOD192Constants.POLICIES;
 
 namespace ASPNETMOD192.Controllers
 {
+    // Roles = "admin,driver,administrative"
+    [Authorize(Policy = APP_POLICY.NAME)]
     public class AppointmentController : Controller
     {
         private readonly ILogger<AppointmentController> _logger;
         private readonly IToastNotification _toastNotification;
+        private readonly IHtmlLocalizer<Resource> _sharedLocalizer;
+        private readonly IEmailSender _emailSender;
 
         private readonly ApplicationDbContext _context;
 
         public AppointmentController(ILogger<AppointmentController> logger,
                                      IToastNotification toastNotification,
+                                     IHtmlLocalizer<Resource> sharedLocalizer,
+                                     IEmailSender emailSender,
                                      ApplicationDbContext context)
         {
             _logger = logger;
             _toastNotification = toastNotification;
             _context = context;
+            _sharedLocalizer = sharedLocalizer;
+            _emailSender = emailSender;
         }
 
 
-
+        
         public IActionResult Index()
         {
             IEnumerable<Appointment> appointments = _context.Appointments
@@ -37,6 +53,7 @@ namespace ASPNETMOD192.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = APP_POLICY_EDITABLE_CRUD.NAME)]
         public IActionResult Create()
         {
             ViewBag.ClientList = new SelectList(_context.Clients, "ID", "Name");
@@ -46,6 +63,7 @@ namespace ASPNETMOD192.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = APP_POLICY_EDITABLE_CRUD.NAME)]
         public IActionResult Create(Appointment appointment)
         {
             if (ModelState.IsValid)
@@ -59,18 +77,53 @@ namespace ASPNETMOD192.Controllers
                     _context.Appointments.Add(appointment);
                     _context.SaveChanges();
 
-                    _toastNotification.AddSuccessToastMessage($"Successfully scheduled <br/> <b>Appointment # {appointment.AppointmentNumber}</b>");
+                    string formattedSuccessMessage = string.Format(
+                           _sharedLocalizer["Successfully scheduled <br/> <b>Appointment # {0}</b>"].Value,
+                           appointment.AppointmentNumber
+                    );
+
+                    _toastNotification.AddSuccessToastMessage(formattedSuccessMessage);
+
+                    // Send Email
+                    Client? client = _context.Clients.Find(appointment.ClientID);
+                    Staff? staff = _context.Staff.Find(appointment.StaffID);
+
+                    if (client == null || staff == null)
+                    {
+                        return NotFound();
+                    }
+
+                    string template = System.IO.File.ReadAllText(
+                        Path.Combine(
+                            Directory.GetCurrentDirectory(),
+                            "EmailTemplates",
+                            "create_appointment.html"
+                        )
+                    );
+
+
+                    StringBuilder htmlBody = new StringBuilder(template);
+                    htmlBody.Replace("##CUSTOMER_NAME##", client.Name);
+                    htmlBody.Replace("##APPOINTMENT_DATE##", appointment.Date.ToShortDateString());
+                    htmlBody.Replace("##APPOINTMENT_TIME##", appointment.Time.ToShortTimeString());
+                    htmlBody.Replace("##STAFF_NAME##", staff.Name);
+
+                    var x = _emailSender.SendEmailAsync(client.Email, "Appointment Scheduled", htmlBody.ToString());
 
                     return RedirectToAction("Index");
                 }
                 else
                 {
-                    ViewBag.ErrorMessage = "This Appointment Number is already used! Please insert a new one.";
+                    ViewBag.ErrorMessage = _sharedLocalizer["ErrorRepeatedAppointmentNumber"].Value;
                 }
             }
 
-            _toastNotification.AddErrorToastMessage($"Error while schedulling Appointment #{appointment.AppointmentNumber}.");
-            
+            string formattedMessage = string.Format(_sharedLocalizer["Error while schedulling Appointment #{0}."].Value,
+                                                    appointment.AppointmentNumber);
+
+
+            _toastNotification.AddErrorToastMessage(formattedMessage);
+
             ViewBag.ClientList = new SelectList(_context.Clients, "ID", "Name");
             ViewBag.StaffList = new SelectList(_context.Staff, "ID", "Name");
             return View(appointment);
@@ -78,13 +131,14 @@ namespace ASPNETMOD192.Controllers
 
         private void SetupAppointments()
         {
-            ViewBag.CustomerList = new SelectList(_context.Clients, "ID", "Name");
+            ViewBag.ClientList = new SelectList(_context.Clients, "ID", "Name");
 
             ViewBag.StaffList = new SelectList(_context.Staff, "ID", "Name");
         }
 
 
         [HttpGet]
+        [Authorize(Policy = APP_POLICY_EDITABLE_CRUD.NAME)]
         public IActionResult Edit(int id)
         {
             Appointment? appointment = _context.Appointments.Find(id);
@@ -99,6 +153,7 @@ namespace ASPNETMOD192.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = APP_POLICY_EDITABLE_CRUD.NAME)]
         public IActionResult Edit(Appointment appointment)
         {
             if (ModelState.IsValid)
@@ -145,7 +200,7 @@ namespace ASPNETMOD192.Controllers
             return View(appointment);
         }
 
-
+        [Authorize(Policy = APP_POLICY_ADMIN.NAME)]
         public IActionResult Delete(int? id)
         {
             if (id == null)
@@ -163,7 +218,8 @@ namespace ASPNETMOD192.Controllers
             return View(customer);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("Delete")] // POST /Appointment/Delete
+        [Authorize(Policy = APP_POLICY_ADMIN.NAME)]
         public IActionResult DeleteConfirmed(int id)
         {
             Appointment? appointment = _context.Appointments.Find(id);
@@ -186,6 +242,16 @@ namespace ASPNETMOD192.Controllers
 
             return View(appointment);
 
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        public IActionResult VerifyValidAppointmentNumber(string appointmentNumber)
+        {
+            bool valid = _context.Appointments
+                                    .Where(ap => ap.AppointmentNumber == appointmentNumber)
+                                    .IsNullOrEmpty();
+
+            return Json(valid);
         }
     }
 }

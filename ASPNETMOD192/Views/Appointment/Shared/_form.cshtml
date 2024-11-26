@@ -28,7 +28,7 @@
 <div class="form-group">
     <label asp-for="StaffID" class="form-label"></label>
     <select asp-for="StaffID" class="form-control" asp-items="ViewBag.StaffList">
-        <option value="" selected>Please Select a Staff Member</option>
+        <option value="" selected>@sharedLocalizer["Please Select a Staff Member"]</option>
     </select>
     <span asp-validation-for="StaffID" class="text-danger"></span>
 </div>
@@ -55,6 +55,7 @@
 @{
     string actionName = ViewContext.RouteData.Values["action"]?.ToString()?.ToLower() ?? "";
 }
+
 
 
 <script type="text/javascript" on-content-loaded="true">

@@ -4,33 +4,43 @@ namespace ASPNETMOD192.Models
 {
     public class Staff
     {
+        [Display(Name = "ID")]
         public int ID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "RequiredErrorMessage")]
+        [Display(Name = "Name")]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "RequiredErrorMessage")]
         [DataType(DataType.Date)]
+        [Display(Name = "Birthday")]
         public DateOnly Birthday { get; set; }
 
         [StringLength(100)]
-        [Required]
+        [Required(ErrorMessage = "RequiredErrorMessage")]
+        [Display(Name = "Address")]
         public string Address { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "RequiredErrorMessage")]
+        [Display(Name = "VatNumber")]
         public string VATNumber { get; set; }
 
+        [Display(Name = "AdmissionDate")]
         public DateTime AdmissionDate { get; set; }
 
+        [Display(Name = "DeactivationDate")]
         public DateTime DeactivationDate { get; set ;}
 
+        [Display(Name = "CellPhoneNumber")]
         public string? CellPhoneNumber { get; set; }
 
         [EmailAddress] // TODO Check me
-        [Required]
+        [Required(ErrorMessage = "RequiredErrorMessage")]
+        [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "RequiredErrorMessage")]
+        [Display(Name = "StaffNumber")]
         public string StaffNumber { get;set; }
     }
 }

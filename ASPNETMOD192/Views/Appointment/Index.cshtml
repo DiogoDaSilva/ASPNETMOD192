@@ -1,33 +1,54 @@
 ﻿@model IEnumerable<Appointment>
 
-<h1>Index</h1>
+@{
+    bool isDriver = User.IsInRole(ASPNETMOD192Constants.ROLES.DRIVER);
+}
 
-<p>
-    <a asp-action="Create">Schedule new @sharedLocalizer["Appointment"]</a>
-</p>
+<h1>@sharedLocalizer["Index"]</h1>
+
+@* SERVER BASED *@
+@if(!isDriver)
+{
+    <p>
+        <a asp-action="Create">@sharedLocalizer["Schedule New Appointment"]</a>
+    </p>
+}
 
 @(
 Html.Grid(Model)
         .Build(columns =>
         {
-            columns.Add(ap => ap.AppointmentNumber);
-            columns.Add(ap => ap.Date);
-            columns.Add(ap => ap.Time);
-            columns.Add(ap => ap.Client.Name).Titled("Client");
-            columns.Add(ap => ap.Staff.Name).Titled("Staff");
-            columns.Add(ap => ap.IsDone)
-                .RenderedAs(ap => (ap.IsDone ? "Yes" : "No"))
+            columns.Add(ap => ap.AppointmentNumber).Titled(sharedLocalizer["Appointment #"].Value);
+            columns.Add(ap => ap.Date).Titled(sharedLocalizer["Date"].Value);
+            columns.Add(ap => ap.Time).Titled(sharedLocalizer["Time"].Value);
+            columns.Add(ap => ap.Client.Name).Titled(sharedLocalizer["Client"].Value);
+            columns.Add(ap => ap.Staff.Name).Titled(sharedLocalizer["Staff"].Value);
+            columns.Add(ap => ap.IsDone).Titled(sharedLocalizer["Is Done?"].Value)
+                .RenderedAs(ap => (ap.IsDone ? sharedLocalizer["Yes"].Value : sharedLocalizer["No"].Value))
                 .UsingFilterOptions(new[]
                 {
-                    new SelectListItem { Value = "true", Text = "Yes" },
-                    new SelectListItem { Value = "false", Text = "No" },
+                    new SelectListItem { Value = "true", Text = sharedLocalizer["Yes"].Value },
+                    new SelectListItem { Value = "false", Text = sharedLocalizer["No"].Value },
                 });
 
-            columns.Add(ap => Html.ActionLink("Details", "Details", new { id = ap.ID }, new { @class = "btn btn-primary" }));
-            columns.Add(ap => Html.ActionLink("Edit", "Edit", new { id = ap.ID }, new { @class = "btn btn-primary" }));
-            columns.Add(ap => Html.ActionLink("Delete", "Delete", new { id = ap.ID }, new { @class = "btn btn-primary" }));
+
+
+            columns.Add(ap => Html.ActionLink(sharedLocalizer["Details"].Value, "Details", new { id = ap.ID }, new { @class = "btn btn-primary" }));
+
+            if (!isDriver)
+            {
+                columns.Add(ap => Html.ActionLink(sharedLocalizer["Edit"].Value, "Edit", new { id = ap.ID }, new { @class = "btn btn-primary" }));
+                columns.Add(ap => Html.ActionLink(sharedLocalizer["Delete"].Value, "Delete", new { id = ap.ID }, new { @class = "btn btn-primary" }));
+            }
+
+            @* columns.Add(ap => ap).Titled(sharedLocalizer["Actions"].Value)
+                .Encoded(false).
+                RenderedAs(ap => string.Format("{0} {1} {2}",
+                    $"<a class=\"btn btn-secondary btn-sm\" href=\"/Appointment/Details/{ap.ID}\">{sharedLocalizer["Details"].Value}</a>",
+                    $"<a class=\"btn btn-primary btn-sm\" href=\"/Appointment/Edit/{ap.ID}\">{sharedLocalizer["Edit"].Value}</a>",
+                    $"<a class=\"btn btn-danger btn-sm\" href=\"/Appointment/Delete/{ap.ID}\">{sharedLocalizer["Delete"].Value}</a>")); *@
         })
         .Filterable()
         .Sortable()
-        .Empty("No Data")
+        .Empty(sharedLocalizer["No Data"].Value)
 )

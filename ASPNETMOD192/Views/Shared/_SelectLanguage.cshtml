@@ -1,0 +1,36 @@
+﻿@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+
+@inject IOptions<RequestLocalizationOptions> LocOptions;
+
+@{
+    var supportedCultures = LocOptions.Value.SupportedUICultures!
+                                                    .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
+                                                    .ToList();
+
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+}
+
+<ul class="navbar-nav select-language">
+    <li class="nav-item">
+        <div>
+            <form id="selectLanguage" asp-controller="Home" asp-action="SetLanguage"
+                        asp-route-returnUrl="@(Context.Request.Path + Context.Request.QueryString)"
+                        method="post"
+                        class="form-horizontal row"
+                        role="form">
+                    
+
+                        <div class="col-md-6 text-end">@sharedLocalizer["Language:"]</div>
+
+                        <div class="col-md-6">
+                            <select class="form-control" name="culture" onchange="this.form.submit();"
+                                asp-for="@requestCulture!.RequestCulture.UICulture.Name"
+                                asp-items="supportedCultures">
+                            </select>
+                        </div>                    
+                    
+                    </form>
+        </div>
+    </li>
+</ul>

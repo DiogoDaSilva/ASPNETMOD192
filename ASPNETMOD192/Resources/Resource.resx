@@ -121,13 +121,111 @@
     <value>Create New</value>
   </data>
   <data name="Edit" xml:space="preserve">
-    <value />
+    <value>Edit</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Delete" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
   </data>
   <data name="Appointment" xml:space="preserve">
     <value>Appointment</value>
+  </data>
+  <data name="Client" xml:space="preserve">
+    <value>Client</value>
+  </data>
+  <data name="Schedule New Appointment" xml:space="preserve">
+    <value>Schedule New Appointment</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Birthday" xml:space="preserve">
+    <value>Birthday</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="VAT #" xml:space="preserve">
+    <value>VAT #</value>
+  </data>
+  <data name="Admission Date" xml:space="preserve">
+    <value>Admission Date</value>
+  </data>
+  <data name="Deactivation" xml:space="preserve">
+    <value>Deactivation</value>
+  </data>
+  <data name="Cellphone" xml:space="preserve">
+    <value>Cellphone</value>
+  </data>
+  <data name="E-mail" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="Appointment #" xml:space="preserve">
+    <value>Appointment #</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="Informations" xml:space="preserve">
+    <value>Informations</value>
+  </data>
+  <data name="Is Done?" xml:space="preserve">
+    <value>Is Done?</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="Please Select a Staff Member" xml:space="preserve">
+    <value>Please Select a Staff Member</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="RequiredErrorMessage" xml:space="preserve">
+    <value>The {0} field is required.</value>
+  </data>
+  <data name="ErrorRepeatedAppointmentNumber" xml:space="preserve">
+    <value>This Appointment Number is already used! Please insert a new one.</value>
+  </data>
+  <data name="Error while schedulling Appointment #{0}." xml:space="preserve">
+    <value>Error while schedulling Appointment #{0}.</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="No Data" xml:space="preserve">
+    <value>No Data</value>
+  </data>
+  <data name="Index" xml:space="preserve">
+    <value>Index</value>
+  </data>
+  <data name="Successfully scheduled &lt;br/&gt; &lt;b&gt;Appointment # {0}&lt;/b&gt;" xml:space="preserve">
+    <value>Successfully scheduled &lt;br/&gt; &lt;b&gt;Appointment # {0}&lt;/b&gt;</value>
+  </data>
+  <data name="ValidationRequired" xml:space="preserve">
+    <value>The 3 {0} field is required.</value>
+  </data>
+  <data name="A value for the '{0}' property was not provided." xml:space="preserve">
+    <value>A value for the '{0}' property was not provided.</value>
+  </data>
+  <data name="The {0} field is required." xml:space="preserve">
+    <value>The 2 {0} field is required.</value>
+  </data>
+  <data name="Validation.Required" xml:space="preserve">
+    <value>The field {0} is required.</value>
+  </data>
+  <data name="StringLenghtErrorMessage" xml:space="preserve">
+    <value>The field {0} must have up to {1} characters.</value>
+  </data>
+  <data name="A value is required" xml:space="preserve">
+    <value>A value is required</value>
+  </data>
+  <data name="This Appointment Number is already used! Please insert a new one." xml:space="preserve">
+    <value>Test</value>
   </data>
 </root>
