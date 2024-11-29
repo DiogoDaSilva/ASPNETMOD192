@@ -4,19 +4,7 @@
     bool isDriver = User.IsInRole(ASPNETMOD192Constants.ROLES.DRIVER);
 }
 
-<h1>@sharedLocalizer["Index"]</h1>
-
-@* SERVER BASED *@
-@if(!isDriver)
-{
-    <p>
-        <a asp-action="Create">@sharedLocalizer["Schedule New Appointment"]</a>
-    </p>
-
-    <p>
-        <a asp-action="TomorrowAppointments" class="btn btn-primary">@sharedLocalizer["Tomorrow Appointments"]</a>
-    </p>
-}
+<h1>@sharedLocalizer["Tomorrow Appointments"]</h1>
 
 @(
 Html.Grid(Model)
@@ -36,23 +24,11 @@ Html.Grid(Model)
                 });
 
 
-
             columns.Add(ap => Html.ActionLink(sharedLocalizer["Details"].Value, "Details", new { id = ap.ID }, new { @class = "btn btn-primary" }));
-
-            if (!isDriver)
-            {
-                columns.Add(ap => Html.ActionLink(sharedLocalizer["Edit"].Value, "Edit", new { id = ap.ID }, new { @class = "btn btn-primary" }));
-                columns.Add(ap => Html.ActionLink(sharedLocalizer["Delete"].Value, "Delete", new { id = ap.ID }, new { @class = "btn btn-primary" }));
-            }
-
-            @* columns.Add(ap => ap).Titled(sharedLocalizer["Actions"].Value)
-                .Encoded(false).
-                RenderedAs(ap => string.Format("{0} {1} {2}",
-                    $"<a class=\"btn btn-secondary btn-sm\" href=\"/Appointment/Details/{ap.ID}\">{sharedLocalizer["Details"].Value}</a>",
-                    $"<a class=\"btn btn-primary btn-sm\" href=\"/Appointment/Edit/{ap.ID}\">{sharedLocalizer["Edit"].Value}</a>",
-                    $"<a class=\"btn btn-danger btn-sm\" href=\"/Appointment/Delete/{ap.ID}\">{sharedLocalizer["Delete"].Value}</a>")); *@
         })
         .Filterable()
         .Sortable()
         .Empty(sharedLocalizer["No Data"].Value)
 )
+
+<a asp-action="SendEmailToTomorrowAppointments" class="btn btn-warning">@sharedLocalizer["Send Tomorrow Appointments E-mail"]</a> 

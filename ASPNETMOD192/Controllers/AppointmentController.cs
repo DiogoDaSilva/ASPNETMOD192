@@ -13,6 +13,7 @@ using NToastNotify;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Text;
+using System.Text.RegularExpressions;
 using static ASPNETMOD192.ASPNETMOD192Constants.POLICIES;
 
 namespace ASPNETMOD192.Controllers
@@ -51,6 +52,57 @@ namespace ASPNETMOD192.Controllers
                                                             .ToList();
             return View(appointments);
         }
+
+        [Authorize(Policy = APP_POLICY_EDITABLE_CRUD.NAME)]
+        public IActionResult TomorrowAppointments()
+        {
+            var tomorrow = DateOnly.FromDateTime(DateTime.Today.AddDays(1).Date);
+            IEnumerable<Appointment> appointments = _context.Appointments
+                                                            .Include(ap => ap.Client)
+                                                            .Include(ap => ap.Staff)
+                                                            .Where(ap => ap.Date == tomorrow)
+                                                            .ToList();
+            return View(appointments);
+        }
+
+        [Authorize(Policy = APP_POLICY_EDITABLE_CRUD.NAME)]
+        public IActionResult SendEmailToTomorrowAppointments()
+        {
+            var tomorrow = DateOnly.FromDateTime(DateTime.Today.AddDays(1).Date);
+            IEnumerable<Appointment> appointments = _context.Appointments
+                                                            .Include(ap => ap.Client)
+                                                            .Include(ap => ap.Staff)
+                                                            .Where(ap => ap.Date == tomorrow)
+                                                            .ToList();
+
+            var culture = Thread.CurrentThread.CurrentUICulture;
+
+            string template = System.IO.File.ReadAllText(
+                    Path.Combine(
+                        Directory.GetCurrentDirectory(),
+                        "EmailTemplates",
+                        $"tomorrow_appointments.{culture.Name}.html"
+                    )
+                );
+
+            foreach (var appointment in appointments)
+            {
+                StringBuilder htmlBody = new StringBuilder(template);
+                htmlBody.Replace("##CUSTOMER_NAME##", appointment.Client.Name);
+                htmlBody.Replace("##APPOINTMENT_DATE##", appointment.Date.ToShortDateString());
+                htmlBody.Replace("##APPOINTMENT_TIME##", appointment.Time.ToShortTimeString());
+                htmlBody.Replace("##STAFF_NAME##", appointment.Staff.Name);
+
+                _emailSender.SendEmailAsync(appointment.Client.Email,
+                    _sharedLocalizer["Appointment Scheduled for Tomorrow"].Value, htmlBody.ToString());
+            }
+
+            _toastNotification.AddSuccessToastMessage(_sharedLocalizer["Successfully sent Emails to Tomorrow's Appointments"].Value);
+
+            return View(nameof(TomorrowAppointments), appointments);
+        }
+
+
 
         [HttpGet]
         [Authorize(Policy = APP_POLICY_EDITABLE_CRUD.NAME)]
@@ -93,14 +145,15 @@ namespace ASPNETMOD192.Controllers
                         return NotFound();
                     }
 
+                    var culture = Thread.CurrentThread.CurrentUICulture;
+
                     string template = System.IO.File.ReadAllText(
                         Path.Combine(
                             Directory.GetCurrentDirectory(),
                             "EmailTemplates",
-                            "create_appointment.html"
+                            $"create_appointment.{culture.Name}.html"
                         )
                     );
-
 
                     StringBuilder htmlBody = new StringBuilder(template);
                     htmlBody.Replace("##CUSTOMER_NAME##", client.Name);
@@ -108,7 +161,7 @@ namespace ASPNETMOD192.Controllers
                     htmlBody.Replace("##APPOINTMENT_TIME##", appointment.Time.ToShortTimeString());
                     htmlBody.Replace("##STAFF_NAME##", staff.Name);
 
-                    var x = _emailSender.SendEmailAsync(client.Email, "Appointment Scheduled", htmlBody.ToString());
+                    var x = _emailSender.SendEmailAsync(client.Email, _sharedLocalizer["Appointment Scheduled"].Value, htmlBody.ToString());
 
                     return RedirectToAction("Index");
                 }

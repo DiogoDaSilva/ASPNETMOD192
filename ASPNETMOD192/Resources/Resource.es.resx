@@ -228,4 +228,13 @@
   <data name="This Appointment Number is already used! Please insert a new one." xml:space="preserve">
     <value>Ya ha una cita con esse numero.</value>
   </data>
+  <data name="Appointment Scheduled" xml:space="preserve">
+    <value>Cita agendada</value>
+  </data>
+  <data name="Appointment Scheduled for Tomorrow" xml:space="preserve">
+    <value>Cita agendada para mañana</value>
+  </data>
+  <data name="Successfully sent Emails to Tomorrow's Appointments" xml:space="preserve">
+    <value>Enviados e-mails de citas para mañana, con sucesso.</value>
+  </data>
 </root>
