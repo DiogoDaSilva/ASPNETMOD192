@@ -1,144 +1,141 @@
-﻿//using CursoMod165.Data;
-//using CursoMod165.Models;
-//using Microsoft.AspNetCore.Authorization;
-//using Microsoft.AspNetCore.Mvc;
-//using Microsoft.AspNetCore.Mvc.Rendering;
-//using Microsoft.EntityFrameworkCore;
-//using static CursoMod165.CursoMod165Constants;
-
-//namespace CursoMod165.Controllers
-//{
-//    [Authorize(Policy = POLICIES.APP_POLICY_ADMIN.NAME)]
-//    public class StaffController : Controller
-//    {
-//        private readonly ApplicationDbContext _context;
-
-//        public StaffController(ApplicationDbContext context)
-//        {
-//            _context = context;
-//        }
+﻿using ASPNETMOD192.Data;
+using ASPNETMOD192.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 
-//        public IActionResult Index()
-//        {
-//            IEnumerable<Staff> Staffs = _context
-//                                            .Staffs
-//                                            .Include(s => s.StaffRole)
-//                                            .ToList();
+namespace CursoMod165.Controllers
+{
+    public class StaffController : Controller
+    {
+        private readonly ApplicationDbContext _context;
 
-//            return View(Staffs);
-//        }
-
-//        [HttpGet]
-//        public IActionResult Create()
-//        {
-//            this.SetupStaffModel();
-
-//            return View();
-//        }
+        public StaffController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
 
-//        [HttpPost]
-//        public IActionResult Create(Staff Staff)
-//        {
-//            if (ModelState.IsValid)
-//            {
-//                _context.Staffs.Add(Staff);
-//                _context.SaveChanges();
+        public IActionResult Index()
+        {
+            IEnumerable<Staff> Staffs = _context
+                                            .Staff
+                                            .ToList();
 
-//                return RedirectToAction(nameof(Index));
-//            }
+            return View(Staffs);
+        }
 
-//            this.SetupStaffModel();
+        [HttpGet]
+        public IActionResult Create()
+        {
+            this.SetupStaffModel();
 
-//            return View(Staff);
-//        }
-
-//        public IActionResult Details(int id)
-//        {
-//            Staff? Staff = _context.Staffs.Find(id);
-
-//            if (Staff == null)
-//            {
-//                return RedirectToAction(nameof(Index));
-//            }
-
-//            return View(Staff);
-//        }
-
-//        [HttpGet]
-//        public IActionResult Edit(int id)
-//        {
-//            Staff? Staff = _context.Staffs.Find(id);
-
-//            if (Staff == null)
-//            {
-//                return RedirectToAction(nameof(Index));
-//            }
-
-//            this.SetupStaffModel();
-
-//            return View(Staff);
-//        }
-
-//        [HttpPost]
-//        public IActionResult Edit(Staff Staff)
-//        {
-
-//            if (ModelState.IsValid)
-//            {
-//                _context.Staffs.Update(Staff);
-//                _context.SaveChanges();
-//            }
-
-//            this.SetupStaffModel();
-
-//            return View(Staff);
-//        }
+            return View();
+        }
 
 
-//        [HttpGet]
-//        public IActionResult Delete(int? id)
-//        {
-//            if (id == null)
-//            {
-//                return NotFound();
-//            }
+        [HttpPost]
+        public IActionResult Create(Staff Staff)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Staff.Add(Staff);
+                _context.SaveChanges();
 
-//            Staff? Staff = _context.Staffs.Find(id);
+                return RedirectToAction(nameof(Index));
+            }
 
-//            if (Staff == null)
-//            {
-//                return RedirectToAction(nameof(Index));
-//            }
+            this.SetupStaffModel();
 
-//            return View(Staff);
-//        }
+            return View(Staff);
+        }
 
-//        [HttpPost, ActionName("Delete")]
-//        public IActionResult DeleteConfirmed(int? id)
-//        {
-//            if (id == null)
-//            {
-//                return NotFound();
-//            }
+        public IActionResult Details(int id)
+        {
+            Staff? Staff = _context.Staff.Find(id);
 
-//            Staff? Staff = _context.Staffs.Find(id);
+            if (Staff == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
 
-//            if (Staff != null)
-//            {
-//                _context.Staffs.Remove(Staff);
-//                _context.SaveChanges();
-//                return RedirectToAction(nameof(Index));
-//            }
+            return View(Staff);
+        }
 
-//            return View(Staff);
-//        }
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            Staff? Staff = _context.Staff.Find(id);
 
-//        private void SetupStaffModel()
-//        {
-//            ViewBag.StaffRoles = new SelectList(_context.StaffRoles, "ID", "Name");
-//            ViewBag.MedicStaffRoleID = _context.StaffRoles.First(sr => sr.Name == "Medic").ID;
-//        }
-//    }
-//}
+            if (Staff == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            this.SetupStaffModel();
+
+            return View(Staff);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Staff Staff)
+        {
+
+            if (ModelState.IsValid)
+            {
+                _context.Staff.Update(Staff);
+                _context.SaveChanges();
+            }
+
+            this.SetupStaffModel();
+
+            return View(Staff);
+        }
+
+
+        [HttpGet]
+        public IActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Staff? Staff = _context.Staff.Find(id);
+
+            if (Staff == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(Staff);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Staff? Staff = _context.Staff.Find(id);
+
+            if (Staff != null)
+            {
+                _context.Staff.Remove(Staff);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(Staff);
+        }
+
+        private void SetupStaffModel()
+        {
+            //ViewBag.MedicStaffRoleID = _context.StaffRoles.First(sr => sr.Name == "Medic").ID;
+        }
+    }
+}

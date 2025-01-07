@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Appointment>
+
+<h1>@sharedLocalizer["Next Week Appointments"]</h1>
+<h4>@sharedLocalizer["Start Date"]: @ViewBag.StartDate.ToShortDateString()</h4>
+<h4>@sharedLocalizer["End Date"]: @ViewBag.EndDate.ToShortDateString()</h4>
+
+
+@(
+Html.Grid(Model)
+        .Build(columns =>
+        {
+            columns.Add(ap => ap.AppointmentNumber).Titled(sharedLocalizer["Appointment #"].Value);
+            columns.Add(ap => ap.Date).Titled(sharedLocalizer["Date"].Value);
+            columns.Add(ap => ap.Time).Titled(sharedLocalizer["Time"].Value);
+            columns.Add(ap => ap.Client.Name).Titled(sharedLocalizer["Client"].Value);
+            columns.Add(ap => ap.Staff.Name).Titled(sharedLocalizer["Staff"].Value);
+            columns.Add(ap => ap.IsDone).Titled(sharedLocalizer["Is Done?"].Value)
+                .RenderedAs(ap => (ap.IsDone ? sharedLocalizer["Yes"].Value : sharedLocalizer["No"].Value))
+                .UsingFilterOptions(new[]
+                {
+                    new SelectListItem { Value = "true", Text = sharedLocalizer["Yes"].Value },
+                    new SelectListItem { Value = "false", Text = sharedLocalizer["No"].Value },
+                });
+
+
+            columns.Add(ap => Html.ActionLink(sharedLocalizer["Details"].Value, "Details", new { id = ap.ID }, new { @class = "btn btn-primary" }));
+        })
+        .Filterable()
+        .Sortable()
+        .Empty(sharedLocalizer["No Data"].Value)
+)
+
+<a asp-action="SendEmailToNextWeekAppointments" class="btn btn-warning">@sharedLocalizer["Send Next Week Appointments E-mail"]</a> 

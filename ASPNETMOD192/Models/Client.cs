@@ -41,6 +41,10 @@ namespace ASPNETMOD192.Models
         public string Email { get; set; }
 
         // CreatedBy TODO FIXME
+
+        // Relação um para muitos
+        // Propriedade de navegação
+        public ICollection<Appointment> Appointments { get; set; }
     }
 
     

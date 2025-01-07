@@ -3,6 +3,7 @@ using ASPNETMOD192.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Versioning;
 using System.Data.Common;
 
 namespace ASPNETMOD192.Controllers
@@ -152,6 +153,28 @@ namespace ASPNETMOD192.Controllers
 
             return View(client);
 
+        }
+
+        public IActionResult NextAppointments(int id)
+        {
+
+            Client? client = _context.Clients
+                                            .Include(c => c.Appointments
+                                                                .OrderBy(ap => ap.Date)
+                                                                .ThenBy(ap => ap.Time)
+                                                                .Where(ap => ap.Date >= DateOnly.FromDateTime(DateTime.Now))
+                                            )
+                                                .ThenInclude(ap => ap.Staff)
+                                            .Where(c => c.ID == id)
+                                            
+                                            .FirstOrDefault();
+            
+            if (client is null)
+            {
+                return NotFound();
+            }
+
+            return View(client);
         }
     }
 }

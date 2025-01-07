@@ -22,4 +22,11 @@
     <PackageReference Include="NToastNotify" Version="8.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\Appointment\NextWeekAppointments.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

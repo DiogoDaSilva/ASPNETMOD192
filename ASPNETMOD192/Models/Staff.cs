@@ -42,5 +42,11 @@ namespace ASPNETMOD192.Models
         [Required(ErrorMessage = "RequiredErrorMessage")]
         [Display(Name = "StaffNumber")]
         public string StaffNumber { get;set; }
+
+
+        [Required(ErrorMessage = "RequiredErrorMessage")]
+        [Display(Name = "Trade")]
+        public Trade Trade { get; set; }
+
     }
 }

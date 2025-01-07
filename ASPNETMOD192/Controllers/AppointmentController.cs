@@ -103,6 +103,78 @@ namespace ASPNETMOD192.Controllers
         }
 
 
+        [Authorize(Policy = APP_POLICY_EDITABLE_CRUD.NAME)]
+        public IActionResult NextWeekAppointments()
+        {
+
+            int shift = 1;
+
+            if (DateTime.Today.DayOfWeek != DayOfWeek.Sunday)
+            {
+                shift = 8 - (int)DateTime.Today.DayOfWeek;
+            }
+
+            DateOnly startDate = DateOnly.FromDateTime(DateTime.Today.AddDays(shift));
+            DateOnly endDate   = DateOnly.FromDateTime(DateTime.Today.AddDays(shift + 5));
+
+            ViewBag.StartDate = startDate;
+            ViewBag.EndDate = endDate;
+            ViewData["StartDate"] = startDate;
+
+            IEnumerable<Appointment> appointments = _context.Appointments
+                                                            .Include(ap => ap.Client)
+                                                            .Include(ap => ap.Staff)
+                                                            .Where(ap => ap.Date >= startDate && ap.Date <= endDate)
+                                                            .ToList();
+            return View(appointments);
+        }
+
+        [Authorize(Policy = APP_POLICY_EDITABLE_CRUD.NAME)]
+        public IActionResult SendEmailToNextWeekAppointments()
+        {
+
+            DateOnly startDate;
+            DateOnly endDate;
+
+            GetNextWeekDates(out startDate, out endDate);
+
+            ViewBag.StartDate = startDate;
+            ViewBag.EndDate = endDate; 
+
+            IEnumerable<Appointment> appointments = _context.Appointments
+                                                            .Include(ap => ap.Client)
+                                                            .Include(ap => ap.Staff)
+                                                            .Where(ap => ap.Date >= startDate && ap.Date <= endDate)
+                                                            .ToList();
+
+            var culture = Thread.CurrentThread.CurrentUICulture;
+
+            string template = System.IO.File.ReadAllText(
+                    Path.Combine(
+                        Directory.GetCurrentDirectory(),
+                        "EmailTemplates",
+                        $"next_week_appointments.{culture.Name}.html"
+                    )
+                );
+
+            foreach (var appointment in appointments)
+            {
+                StringBuilder htmlBody = new StringBuilder(template);
+                htmlBody.Replace("##CUSTOMER_NAME##", appointment.Client.Name);
+                htmlBody.Replace("##APPOINTMENT_DATE##", appointment.Date.ToShortDateString());
+                htmlBody.Replace("##APPOINTMENT_TIME##", appointment.Time.ToShortTimeString());
+                htmlBody.Replace("##STAFF_NAME##", appointment.Staff.Name);
+
+                _emailSender.SendEmailAsync(appointment.Client.Email,
+                    _sharedLocalizer["Appointment Scheduled for Next Week"].Value, htmlBody.ToString());
+            }
+
+            _toastNotification.AddSuccessToastMessage(_sharedLocalizer["Successfully sent Emails for Next Weeks's Appointments"].Value);
+
+            return View(nameof(NextWeekAppointments), appointments);
+        }
+
+
 
         [HttpGet]
         [Authorize(Policy = APP_POLICY_EDITABLE_CRUD.NAME)]
@@ -305,6 +377,20 @@ namespace ASPNETMOD192.Controllers
                                     .IsNullOrEmpty();
 
             return Json(valid);
+        }
+
+
+        private static void GetNextWeekDates(out DateOnly startDate, out DateOnly endDate)
+        {
+            int shift = 1;
+
+            if (DateTime.Today.DayOfWeek != DayOfWeek.Sunday)
+            {
+                shift = 8 - (int)DateTime.Today.DayOfWeek;
+            }
+
+            startDate = DateOnly.FromDateTime(DateTime.Today.AddDays(shift));
+            endDate = DateOnly.FromDateTime(DateTime.Today.AddDays(shift + 5));
         }
     }
 }

@@ -11,11 +11,11 @@
 <table class="table">
     <thead>
         <tr>
-@*             <th>
+            <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StaffRoleID)
+                @Html.DisplayNameFor(model => model.Trade)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Birthday)
@@ -24,17 +24,14 @@
                 @Html.DisplayNameFor(model => model.Address)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
+                @Html.DisplayNameFor(model => model.CellPhoneNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NIF)
+                @Html.DisplayNameFor(model => model.VATNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Salary)
+                @Html.DisplayNameFor(model => model.StaffNumber)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EmployeeNumber) *@
-            @* </th> *@
             <th>
                 Actions
             </th>
@@ -51,11 +48,11 @@
         @foreach(var staff in Model)
         {
             <tr>
-                @* <td>
+                <td>
                     @Html.DisplayFor(modelItem => staff.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => staff.StaffRole.Name)
+                    @Html.DisplayFor(modelItem => staff.Trade)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => staff.Birthday)
@@ -64,22 +61,19 @@
                     @Html.DisplayFor(modelItem => staff.Address)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => staff.PhoneNumber)
+                    @Html.DisplayFor(modelItem => staff.CellPhoneNumber)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => staff.NIF)
+                    @Html.DisplayFor(modelItem => staff.VATNumber)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => staff.Salary)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => staff.EmployeeNumber)
+                    @Html.DisplayFor(modelItem => staff.StaffNumber)
                 </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@staff.ID">Details</a>
                     <a asp-action="Edit" asp-route-id="@staff.ID">Edit</a>
                     <a asp-action="Delete" asp-route-id="@staff.ID">Delete</a>
-                </td> *@
+                </td>
             </tr>
         }
     </tbody>
