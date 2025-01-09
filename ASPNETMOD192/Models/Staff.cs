@@ -48,5 +48,9 @@ namespace ASPNETMOD192.Models
         [Display(Name = "Trade")]
         public Trade Trade { get; set; }
 
+
+        [Display(Name = "Specialty")]
+        public Specialty? Specialty { get; set; }
+
     }
 }

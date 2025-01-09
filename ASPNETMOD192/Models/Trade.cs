@@ -7,6 +7,6 @@
         Dentist,
         Administrative,
         Driver,
-        OccupationTherapist
+        OccupationalTherapist
     }
 }

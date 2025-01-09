@@ -1,0 +1,12 @@
+﻿@model Client
+
+<h1>@sharedLocalizer["Historic Appointments:"] </h1>
+
+@sharedLocalizer["Client's Schedule"]: @Model.Name
+
+<ul>
+    @foreach(Appointment ap in Model.Appointments)
+    {
+        <li> @ap.Date - @ap.Time - Staff: @ap.Staff.Name [@ap.Staff.StaffNumber] </li>
+    }
+</ul>

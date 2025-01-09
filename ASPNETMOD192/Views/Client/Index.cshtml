@@ -77,6 +77,10 @@ Html.Grid(Model)
                 columns.Add(cli => Html.ActionLink("Edit", "Edit", new { id = cli.ID }, new { @class = "btn btn-primary" }));
                 columns.Add(cli => Html.ActionLink("Details", "Details", new { id = cli.ID }, new { @class = "btn btn-primary" }));
                 columns.Add(cli => Html.ActionLink("Delete", "Delete", new { id = cli.ID }, new { @class = "btn btn-primary" }));
+                
+                columns.Add(cli => Html.ActionLink(sharedLocalizer["Historic Appointments"].Value, "HistoricAppointments",
+                                                                       new { id = cli.ID }, new { @class = "btn btn-primary" }));
+
                 columns.Add(cli => Html.ActionLink(sharedLocalizer["Next Appointments"].Value, "NextAppointments",
                                                                        new { id = cli.ID }, new { @class = "btn btn-primary" }));
                 

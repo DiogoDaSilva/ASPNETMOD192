@@ -176,5 +176,28 @@ namespace ASPNETMOD192.Controllers
 
             return View(client);
         }
+
+        public IActionResult HistoricAppointments(int id)
+        {
+
+            Client? client = _context.Clients
+                                        .Include(c => c.Appointments
+                                                        .OrderBy(ap => ap.Date)
+                                                        .ThenBy(ap => ap.Time)
+                                                        .Where(ap => ap.Date < DateOnly.FromDateTime(DateTime.Now))
+                                                        .Where(ap => ap.IsDone)
+                                        )
+                                            .ThenInclude(ap => ap.Staff)
+                                        .Where(c => c.ID == id)
+
+                                        .FirstOrDefault();
+
+            if (client is null)
+            {
+                return NotFound();
+            }
+
+            return View(client);
+        }
     }
 }
