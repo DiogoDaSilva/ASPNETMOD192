@@ -54,5 +54,8 @@ namespace ASPNETMOD192.Models
         [Display(Name = "Client")]
         public int ClientID { get; set; }
 
+
+        public ICollection<MedicalOperation> MedicalOperations { get; set; }
+
     }
 }

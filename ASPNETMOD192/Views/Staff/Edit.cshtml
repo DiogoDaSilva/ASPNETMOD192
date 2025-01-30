@@ -66,12 +66,11 @@
                 <span asp-validation-for="Trade" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
+            <div id="form-group-specialty" class="form-group">
                 <label asp-for="Specialty" class="form-label"></label>
                 <select asp-for="Specialty" class="form-control" asp-items="Html.GetEnumSelectList<Specialty>()">
-                    <option value="null">@sharedLocalizer["Not Applicable"]</option>
+                    <option value="-1">@sharedLocalizer["Not Applicable"]</option>
                 </select>
-
             </div>
 
             <div class="form-group">
@@ -82,11 +81,27 @@
 </div>
 
 @section Scripts {
-
     <script type="text/javascript" on-content-loaded="true">
-    
-    
+        
+        function visibleFormGroupSpecialty() {
+            let selectedTrade = Number($("select#Trade").val());
+
+            console.log(selectedTrade);
+
+            let formGroupSpecialty = $("div#form-group-specialty");
+
+            if (selectedTrade === @((int)Trade.Medic)) {
+                formGroupSpecialty.css('visibility', 'visible');
+            }
+            else {
+                formGroupSpecialty.css('visibility', 'hidden');
+            }
+        }
+
         $("select#Trade").change(visibleFormGroupSpecialty);
+
+
+        visibleFormGroupSpecialty();
     
     </script>
 

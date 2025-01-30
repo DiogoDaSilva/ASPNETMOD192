@@ -16,6 +16,8 @@ namespace ASPNETMOD192.Data
         public DbSet<Staff> Staff {  get; set; } = default!;
 
         public DbSet<Appointment> Appointments { get; set; } = default!;
+
+        public DbSet<MedicalOperation> MedicalOperation { get; set; } = default!;
     }
 
 
